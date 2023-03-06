@@ -2,9 +2,9 @@
 ---- VERIFYING PART 1 ---- 
 
 ✅ 1. /c/Users/Student/playground exists
-❗️ 2. /c/Users/Student/playground/usa does not exist
-❗️ 3. /c/Users/Student/playground/canada does not exist
-❗️ 4. /c/Users/Student/playground/usa/ohio does not exist
+✅ 2. /c/Users/Student/playground/usa exists
+✅ 3. /c/Users/Student/playground/canada exists
+✅ 4. /c/Users/Student/playground/usa/ohio exists
 ❗️ 5. /c/Users/Student/playground/usa/pennsylvania does not exist
 ❗️ 6. /c/Users/Student/playground/usa/michigan does not exist
 ❗️ 7. /c/Users/Student/playground/canada/quebec does not exist
@@ -25,8 +25,8 @@
 ❗️ 22. /c/Users/Student/playground/canada/british-columbia/prince-george.txt does not exist
 
 Total tests: 22
-Tests passed: 1
-Errors: 21
+Tests passed: 4
+Errors: 18
 
  You still need to make a few more changes.
  If you are having difficulty troubleshooting, try the following:
