@@ -32,9 +32,11 @@ public class Exercise07_StoreHours {
     isStoreOpen(22) ➔ false
      */
     public boolean isStoreOpen(int currentHour) {
+        if (currentHour >= 8 && currentHour < 17) {
+            return true;
+        }
         return false;
     }
-
     /*
     Shelia forgot to take into account the day of the week.
     Her store is open between 8 am (hour 8) and 5 pm (hour 17) on Monday (day M), Wednesday (day W), and Friday (day F).
@@ -54,7 +56,12 @@ public class Exercise07_StoreHours {
     isStoreOpen(12, 'S') ➔ false
      */
     public boolean isStoreOpen(int currentHour, char currentDay) {
-        return false;
+       if (isStoreOpen(currentHour) && (currentDay=='M' || currentDay=='W' || currentDay=='F')) {
+           return true;
+        }
+       else {
+           return false;
+       }
     }
 
 
@@ -72,6 +79,16 @@ public class Exercise07_StoreHours {
     isStoreOpen(9, 'S', true) ➔ true
      */
     public boolean isStoreOpen(int currentHour, char currentDay, boolean isSummer) {
+        if (isStoreOpen(currentHour, currentDay)) {
+            return true;
+        } else if ((currentDay == 'W' || currentDay == 'S') && isSummer) {
+            if (currentDay == 'W' && (currentHour >= 8 && currentHour < 20)) {
+                return true;
+            } else if (currentDay == 'S' && (currentHour >= 9 && currentHour < 15)) {
+                return true;
+            }
+        } else {
+            return false;
+        }
         return false;
-    }
-}
+    }}

@@ -1,6 +1,41 @@
 package com.techelevator;
 
+import java.sql.SQLOutput;
+
 public class Lecture {
+
+    public static void main(String[] args) {
+//        String x= "Starting value";
+//        System.out.println("Before " + x);
+//        doesItChange(x);
+//        System.out.println("After " + x);
+//        printsMyName("Mr. Kevin");
+
+        boolean isTrue = true;
+        boolean isFalse = false;
+        if(!isTrue){
+            System.out.println("expression was true");
+        }
+        else {
+            System.out.println("expression was false");
+        }
+
+     //   System.out.println("No params returns: " + noParams());
+
+    }
+
+//    public static String doesItChange (String x) {
+//        x= "did it change?";
+//        return x;
+//
+//    public static void printsMyName(String name){
+//        System.out.println("My name is: " +name);
+
+   // public static int noParams(){
+
+
+
+
     /*
     1. This method is named returnNotOne and it returns an int. Change
     it so that it returns something other than a 1.
