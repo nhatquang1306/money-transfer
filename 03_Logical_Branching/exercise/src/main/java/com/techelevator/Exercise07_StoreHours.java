@@ -87,8 +87,7 @@ public class Exercise07_StoreHours {
             } else if (currentDay == 'S' && (currentHour >= 9 && currentHour < 15)) {
                 return true;
             }
-        } else {
-            return false;
         }
         return false;
-    }}
+    }
+}

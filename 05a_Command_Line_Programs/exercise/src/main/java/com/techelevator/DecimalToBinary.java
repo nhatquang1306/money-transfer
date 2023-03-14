@@ -15,7 +15,7 @@ public class DecimalToBinary {
 
 			int newNum = Integer.parseInt(numArray[ix]);
 
-			System.out.println("You entered: " + newNum);
+			System.out.print("You entered: " + newNum);
 			String answer = " ";
 
 			for (int i = newNum; i>0;) {
@@ -23,7 +23,7 @@ public class DecimalToBinary {
 				i=i/2;
 				answer = remainder + answer;
 			}
-			System.out.println("In Binary Is " + answer);
+			System.out.println(" In Binary Is " + answer);
 		}
 	}
 }

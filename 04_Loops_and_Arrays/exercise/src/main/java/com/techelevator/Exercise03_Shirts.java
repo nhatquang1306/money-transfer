@@ -38,7 +38,7 @@ public class Exercise03_Shirts {
     buildBulkOrder(0) → []
      */
     public char[] buildBulkOrder(int numberOfShirts) { 
-        char[] bulkOrder; bulkOrder=new char[numberOfShirts];
+        char[] bulkOrder=new char[numberOfShirts];
         for (int i = 0; i < numberOfShirts; i++) {
             if (i%3==0) {
                 bulkOrder[i] = SMALL_TSHIRT;

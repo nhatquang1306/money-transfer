@@ -1,8 +1,32 @@
 package com.techelevator;
 
+import java.util.Locale;
+
 public class Lecture {
 
 	public static void main(String[] args) {
+
+		Cake partyCake = new Cake("Large", false);
+
+		System.out.println(partyCake.getSize());
+
+		partyCake.setSprinkles(true);
+		System.out.println(partyCake.getSize());
+
+
+//		int [] numberList = new int[5];
+//		numberList[0] = 5;
+//		numberList[1] = 10;
+//		numberList[2] = 7;
+//		numberList[3] = 8;
+//		numberList[4] = 19;
+//
+//		// sum up all values of the numberList
+//		int sumOfNumbers = 0;
+//		for(int i = 0; i < numberList.length-1; i++) { // -1 stops from out of bounds
+//			sumOfNumbers += numberList[i]; // same as sumOfNumbers = sumOfNumbers + numberList[i]
+//		}
+//		System.out.println(sumOfNumbers);
 
 		System.out.println("************************************");
 		System.out.println("****** MAKING A STRING OBJECT ******");
@@ -12,15 +36,44 @@ public class Lecture {
 		 * example of this is that there is a literal representation of a
 		 * String (i.e. characters appearing between two double quotes.  This
 		 * is not the case for most classes */
-
 		/* create an new instance of String using a literal */
+		String literalString = "literal string";
+		//System.out.println("this is a literal string: " + literalString);
 
-		
+		String newString = new String(new char[] {'a','b','c'});
+
+		System.out.println("newString is: " + newString);
+
 		System.out.println();
 		System.out.println("******************************");
 		System.out.println("****** MEMBER METHODS ******");
 		System.out.println("******************************");
 		System.out.println();
+
+
+//		System.out.println(" *** charAt() ***");
+//		String name = "Ben Rohus";
+//		char first = name.charAt(0);
+//		char fourth = name.charAt(3);
+//		char h = name.charAt(6);
+//		System.out.println("is h, h: .... " + h);
+//
+//
+//		for (char character:name.toCharArray()) {
+//			System.out.println(character);
+//		}
+//
+//		System.out.println(" *** contains ***");
+//		String hello = "Hello World";
+//
+//		boolean containsHello = hello.contains("Hello");
+//		System.out.println("contains hello? " + containsHello);
+//
+//		boolean containsHelloChained = hello.toLowerCase().contains("hello".toLowerCase());
+//		boolean containsIgnoreCase = hello.equalsIgnoreCase("hello world!");
+//		boolean containsOnly = hello.contains("hello world!");
+//
+//		System.out.println(containsHelloChained + " " + containsIgnoreCase + " " + containsOnly);
 
 
 		/* Other commonly used methods:
@@ -35,6 +88,15 @@ public class Lecture {
 		 * toUpperCase
 		 * trim
 		 */
+
+		String endsWithTest= "whatever";
+		//System.out.println((endsWithTest.endsWith("ever") && endsWithTest.endsWith("tever")));
+
+		String startsWith = "NewString";
+		//System.out.println((startsWith.startsWith("new") || startsWith.startsWith("NewSt")));
+
+		String indexTest = "123456";
+		System.out.println(indexTest);
 
 		System.out.println();
 		System.out.println("**********************");
