@@ -268,19 +268,15 @@ public class Exercises {
 	 hasBad("xbadxx") → true
 	 hasBad("xxbadxx") → false
 	 */
-	public boolean hasBad(String str) { {
-		if (str.length()<4) {
-			return str.contains("bad");  }
-
-				String hasBadString = str.substring(0, 4);
-				if (hasBadString.contains("bad")) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		}
-
+	public boolean hasBad(String str) {
+		if(str.length()<3) {
+			return false;
+	}
+		if(str.length()==3){
+			return str.equals("bad");
+	}
+		return str.substring(0,3).equals("bad") || str.substring(1,4).equals("bad");
+}
 	/*
 	 Given a string and a non-negative int n, return a larger string that is n copies of the original string.
 	 stringTimes("Hi", 2) → "HiHi"
@@ -288,11 +284,13 @@ public class Exercises {
 	 stringTimes("Hi", 1) → "Hi"
 	 */
 	public String stringTimes(String str, int n) {
-		String largerString = "";
-		for (int i=0; i<n; i++) {
-			largerString += str;
-		}
-		return largerString;
+		return str.repeat(n); // .repeat is a multiplication method, multiplies n by the str.
+
+//		String largerString = "";
+//		for (int i=0; i<n; i++) {
+//			largerString += str;
+//		}
+//		return largerString;
 	}
 
 	/*
@@ -381,14 +379,10 @@ public class Exercises {
 	 last2("axxxaaxx") → 2
 	 */
 	public int last2(String str) {
-		if (str.length() < 2) {
-			return 0;
-		}
-		String end = str.substring(str.length() - 2);
 		int count = 0;
-		for (int i = 0; i < str.length() - 2; i++) {
-			if (str.substring(i, i + 2).equals(end)) {
-				count++;
+		for(int i=0; i<str.length()-2;i++) {
+			if(str.substring(i, i+2).equals((str.substring(str.length()-2)))) {
+				count++; // how many times we found the chars
 			}
 		}
 		return count;
