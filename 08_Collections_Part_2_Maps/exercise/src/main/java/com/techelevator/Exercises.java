@@ -1,7 +1,6 @@
 package com.techelevator;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Exercises {
 
@@ -34,7 +33,23 @@ public class Exercises {
 	 *
 	 */
 	public String animalGroupName(String animalName) {
-		return null;
+		Map<String, String> animalGroupName = new HashMap<>(); // Create new map to insert animal names into
+		animalGroupName.put("rhino", "Crash"); // Insert first animal and group
+		animalGroupName.put("giraffe", "Tower");
+		animalGroupName.put("elephant", "Herd");
+		animalGroupName.put("lion", "Pride");
+		animalGroupName.put("crow", "Murder");
+		animalGroupName.put("pigeon", "Hit");
+		animalGroupName.put("flamingo", "Pat");
+		animalGroupName.put("deer", "Herd");
+		animalGroupName.put("dog", "Pack");
+		animalGroupName.put("crocodile", "Float");
+
+		if (animalName != null && animalGroupName.containsKey(animalName.toLowerCase())) { // Making sure name isn't null and checking if map made contains key and converting it to lowercase, so they all match
+			return animalGroupName.get(animalName.toLowerCase()); //If they pass in animal name it should convert it to lower case
+		}
+		return "unknown";
+
 	}
 
 	/*
@@ -59,8 +74,19 @@ public class Exercises {
 	 * isItOnSale("dungeon9999") → 0.00
 	 *
 	 */
-	public double isItOnSale(String itemNumber) {
-		return -1.0;
+	public double isItOnSale(String itemNumber) { //Given a item number
+		Map<String, Double> isOnSale = new HashMap<>();//Make a new Map for each of the discount codes to be entered into. String of the SKU and Value of the discount
+		isOnSale.put("KITCHEN4001", 0.20); // Built new map using discount SKU
+		isOnSale.put("GARAGE1070", 0.15);
+		isOnSale.put("LIVINGROOM", 0.10);
+		isOnSale.put("KITCHEN6073", 0.40);
+		isOnSale.put("BEDROOM3434", 0.60);
+		isOnSale.put("BATH0073", 0.15);
+		if ((itemNumber != null) && isOnSale.containsKey(itemNumber.toUpperCase())) { // create if statement to ensure item is on sale, or if it is on sale
+			return isOnSale.get(itemNumber.toUpperCase()); // returns value of discount amount
+		}
+		return 0.00;
+
 	}
 
 	/*
@@ -76,7 +102,23 @@ public class Exercises {
 	 *
 	 */
 	public Map<String, Integer> robPeterToPayPaul(Map<String, Integer> peterPaul) {
-		return null;
+		// create new hashmap to deposit said money into and represent amount paul takes
+		Map<String, Integer> peterToPayPaul = new HashMap<>();
+		peterToPayPaul.put("Paul", peterPaul.get("Paul"));
+		peterToPayPaul.put("Peter", peterPaul.get("Peter"));
+
+		//if statement for if peter has more than 0 dollars and paul has less than 10
+		if (peterPaul.get("Peter") > 0 && peterPaul.get("Paul") < 1000) {
+
+			// calculations to subtract from peter and add to paul
+			int peterStolenMoney = peterPaul.get("Peter") / 2;
+			int paulStealMoney = peterPaul.get("Paul") + peterStolenMoney;
+
+			peterToPayPaul.put("Paul", paulStealMoney);
+			peterToPayPaul.put("Peter", peterPaul.get("Peter") - peterStolenMoney);
+		}
+
+		return peterToPayPaul;
 	}
 
 	/*
@@ -88,8 +130,22 @@ public class Exercises {
 	 * peterPaulPartnership({"Peter": 3333, "Paul": 1234567890}) → {"Peter": 3333, "Paul": 1234567890}
 	 *
 	 */
-	public Map<String, Integer> peterPaulPartnership(Map<String, Integer> peterPaul) {
-		return null;
+	public Map<String, Integer> peterPaulPartnership(Map<String, Integer> peterPaul) { // gives us peterPaul as a parameter in the method, is a Map
+		Map<String, Integer> contribution = new HashMap<>(); // declared new map to return later on
+
+		if (peterPaul.get("Peter") >= 5000 && peterPaul.get("Paul") >= 10000) {//if statement to check Peter and Paul's balances using conditions of each cent amount
+			Integer peterContribution = peterPaul.get("Peter") / 4; //Made Integer to calculate how much their contributions are
+			Integer paulContribution = peterPaul.get("Paul") / 4;
+
+			contribution.put("PeterPaulPartnership", peterContribution + paulContribution); //Assigning the combined amount to the Method Key "PeterPaulPartnership". .put() populating contribution map
+
+			contribution.put("Peter", peterPaul.get("Peter") - peterContribution);
+			contribution.put("Paul", peterPaul.get("Paul") - paulContribution);
+		} else {
+			return peterPaul;
+		}
+
+		return contribution;
 	}
 
 	/*
@@ -100,8 +156,16 @@ public class Exercises {
 	 * beginningAndEnding(["man", "moon", "main"]) → {"m": "n"}
 	 * beginningAndEnding(["muddy", "good", "moat", "good", "night"]) → {"g": "d", "m": "t", "n": "t"}
 	 */
-	public Map<String, String> beginningAndEnding(String[] words) {
-		return null;
+	public Map<String, String> beginningAndEnding(String[] words) { // Given an array of non-empty string
+		Map<String, String> firstLastList = new HashMap<>(); // new map
+		for (int i = 0; i < words.length; i++) {
+
+			String currentWord = words[i]; // i Represents the current word you are currently looking at in the iteration of the loop
+			String firstCh = currentWord.substring(0, 1); // extract the first character, use substring
+			String lastCh = currentWord.substring(currentWord.length() - 1); // extract the final character
+			firstLastList.put(firstCh, lastCh);
+		}
+		return firstLastList; // return filled map
 	}
 
 	/*
@@ -117,7 +181,16 @@ public class Exercises {
 	 *
 	 */
 	public Map<String, Integer> wordCount(String[] words) {
-		return null;
+		Map<String, Integer> counts = new HashMap<>(); // create an empty hashmap to store the word counts
+		for (String word : words) { // Foreach to iterate through the input array and count for each word in the hashmap
+			if (counts.containsKey(word)) { //if array contains Key word, then adds one to the count map
+				counts.put(word, counts.get(word) + 1); //sees if word and next word in array match the words value
+			} else {
+				counts.put(word, 1); //adds word to key, I'm really tired and forget the rest of it
+			}
+		}
+
+		return counts; // return map as output
 	}
 
 	/*
@@ -132,7 +205,16 @@ public class Exercises {
 	 *
 	 */
 	public Map<Integer, Integer> integerCount(int[] ints) {
-		return null;
+		Map<Integer, Integer> count = new HashMap<>();
+		for (Integer counts : ints) {
+			if (count.containsKey(counts)) {
+				count.put(counts, count.get(counts) + 1);
+			} else {
+				count.put(counts, 1);
+			}
+		}
+
+		return count;
 	}
 
 	/*
@@ -144,11 +226,24 @@ public class Exercises {
 	 * wordMultiple(["c", "c", "c", "c"]) → {"c": true}
 	 *
 	 */
-	public Map<String, Boolean> wordMultiple(String[] words) {
-		return null;
-	}
+	public Map<String, Boolean> wordMultiple(String[] words) { // Take an array of strings as an input and return a map with the strings as keys and boolean values
+		Map<String, Boolean> resultMap = new HashMap<>(); //Create array to store the final amount, whether the string appears 2 or more times.
 
-	/*
+		for (String letters : words) { //loops through string provided of words and letters
+			if (resultMap.containsKey(letters)) { //checks if the new map contains the same keys as letters
+
+				resultMap.put(letters, true); //adds letters to the Key of the map and returns true for value
+
+			} else {
+				resultMap.put(letters, false); //otherwise add letters and return false for value
+			}
+		}
+			return resultMap; // Return the total entries in the result map
+		}
+
+
+
+		/*
 	 * Given two Maps, Map<String, Integer>, merge the two into a new Map, Map<String, Integer> where keys in Map2,
 	 * and their int values, are added to the int values of matching keys in Map1. Return the new Map.
 	 *
@@ -158,9 +253,21 @@ public class Exercises {
 	 * 	 → {"SKU1": 100, "SKU2": 64, "SKU3": 44, "SKU4": 5}
 	 *
 	 */
-	public Map<String, Integer> consolidateInventory(Map<String, Integer> mainWarehouse,
-			Map<String, Integer> remoteWarehouse) {
-		return null;
+	public Map<String, Integer> consolidateInventory(Map<String, Integer> mainWarehouse, Map<String, Integer> remoteWarehouse) { // Two maps are given as input
+		Map<String, Integer> mergeMap = new HashMap<>(mainWarehouse); // Add the contents of the main warehouse to the new map
+		for (Map.Entry<String, Integer> entry : remoteWarehouse.entrySet()) {
+			String key = entry.getKey();
+			int value = entry.getValue(); //
+
+			if (mergeMap.containsKey(key)) {
+				int newValue = mergeMap.get(key) + value;
+				mergeMap.put(key, newValue); // if the key exists, add the values together and put it into the merge map
+			} else {
+				mergeMap.put(key, value); // if the key doesn't exist the key and value are added to the new map
+			}
+		}
+
+		return mergeMap;
 	}
 
 	/*
