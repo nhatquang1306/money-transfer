@@ -182,11 +182,11 @@ public class Exercises {
 	 */
 	public Map<String, Integer> wordCount(String[] words) {
 		Map<String, Integer> counts = new HashMap<>(); // create an empty hashmap to store the word counts
-		for (String word : words) { // Foreach to iterate through the input array and count for each word in the hashmap
+		for (String word : words) { // Foreach to iterate through the input array and count for each word in the hashmap, checks each word for actual word in array
 			if (counts.containsKey(word)) { //if array contains Key word, then adds one to the count map
-				counts.put(word, counts.get(word) + 1); //sees if word and next word in array match the words value
+				counts.put(word, counts.get(word) + 1); //sees if word and next word in array match the words value overwrites previous entry
 			} else {
-				counts.put(word, 1); //adds word to key, I'm really tired and forget the rest of it
+				counts.put(word, 1); //adds word to key, with a value of 1
 			}
 		}
 
@@ -255,15 +255,15 @@ public class Exercises {
 	 */
 	public Map<String, Integer> consolidateInventory(Map<String, Integer> mainWarehouse, Map<String, Integer> remoteWarehouse) { // Two maps are given as input
 		Map<String, Integer> mergeMap = new HashMap<>(mainWarehouse); // Add the contents of the main warehouse to the new map
-		for (Map.Entry<String, Integer> entry : remoteWarehouse.entrySet()) {
-			String key = entry.getKey();
-			int value = entry.getValue(); //
+		for (Map.Entry<String, Integer> entry : remoteWarehouse.entrySet()) {// For loop is creating a string entry and is looping through remote warehouse from beginning to end
+			String key = entry.getKey(); //The string that was just created is getting the keys
+			int value = entry.getValue(); //The int is getting the value from the remote warehouse
 
-			if (mergeMap.containsKey(key)) {
-				int newValue = mergeMap.get(key) + value;
-				mergeMap.put(key, newValue); // if the key exists, add the values together and put it into the merge map
+			if (mergeMap.containsKey(key)) { //calling first map and checking to see if it contains the content from the for loop
+				int newValue = mergeMap.get(key) + value; //if new map contains the key, then newValue int will be equal to new map key and value.
+				mergeMap.put(key, newValue); //Add new merged keys and values to new map
 			} else {
-				mergeMap.put(key, value); // if the key doesn't exist the key and value are added to the new map
+				mergeMap.put(key, value); // if the key doesn't match the key and value are added to the new map
 			}
 		}
 

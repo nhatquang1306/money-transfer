@@ -24,11 +24,13 @@ public class Main {
         studentList.add(new Student("Quang", "Huynh"));
         studentList.add(new Student("Whitney", "Bescheinen"));
 
+        System.out.println(studentList.get(7));
+
+
         int numberOfGroups = 5;
         int maxLength = 20;
 
         Scanner userInput = new Scanner(System.in);
-        String input = "";
 
         while(!input.equals("E")) {
             System.out.println("Welcome!  [Current number of groups: " + numberOfGroups + " Number of students: " + studentList.size() + "]");
@@ -37,8 +39,11 @@ public class Main {
             System.out.println("[P]rint out a new list of groups");
             System.out.println("[S]huffle the groups");
             System.out.println("[E]nd program");
+            String input = userInput.nextLine().toLowerCase(;
 
-            input = userInput.nextLine();
+            if (input.equals("e")) {
+                break;
+            }
 
         }
 
