@@ -8,6 +8,7 @@ public class Auction {
 	private String itemForSale;
 	private Bid currentHighBid;
 	private List<Bid> allBids;
+	private Bid winningBid;
 
 	public Auction(String itemForSale) {
 		this.itemForSale = itemForSale;
@@ -21,6 +22,7 @@ public class Auction {
 		if (offeredBid.getBidAmount() > currentHighBid.getBidAmount()) {
 			currentHighBid = offeredBid;
 			isCurrentWinningBid = true;
+			winningBid = offeredBid;
 		}
 		return isCurrentWinningBid;
 	}
@@ -35,5 +37,9 @@ public class Auction {
 
 	public String getItemForSale() {
 		return itemForSale;
+	}
+
+	public Bid getWinningBid() {
+		return winningBid;
 	}
 }

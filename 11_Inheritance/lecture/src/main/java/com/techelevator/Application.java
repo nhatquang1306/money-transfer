@@ -16,6 +16,29 @@ public class Application {
         //....
         //....
         // This might go on until the auction runs out of time or hits a max # of bids
+        for(Bid bid: generalAuction.getAllBids()){
+            System.out.println("[Name: " + bid.getBidder() + " Bid:" + bid.getBidAmount() + "] Is winning bid: "); // generalAuction.getWinningBid().equals(bid)
+        }
+        /**
+         * Buyout Auction
+         *
+         *
+         */
+
+        System.out.println("-----------------------");
+
+        BuyoutAuction buyoutAuction = new BuyoutAuction("Hour Glass Dog", 55);
+
+        buyoutAuction.placeBid(new Bid("Carlos", 20));
+        buyoutAuction.placeBid(new Bid("Alyssa", 30));
+        buyoutAuction.placeBid(new Bid("Kyle", 26));
+        buyoutAuction.placeBid(new Bid("Emily", 56));
+        buyoutAuction.placeBid(new Bid("John", 62));
+
+        for(Bid bid: buyoutAuction.getAllBids()){
+            System.out.println("[Name: " + bid.getBidder() + " Bid:" + bid.getBidAmount() + "] Is winning bid: " + buyoutAuction.getWinningBid()); // generalAuction.getWinningBid().equals(bid)
 
     }
-}
+
+
+} }
