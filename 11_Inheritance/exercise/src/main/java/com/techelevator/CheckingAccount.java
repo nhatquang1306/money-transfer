@@ -9,9 +9,12 @@ public class CheckingAccount extends BankAccount {
         super(accountHolderName, accountNumber, balance);
     }
     public int withdraw(int amountToWithdraw) {
-        if (super.getBalance() < 0 && super.getBalance() > -100) {
+        if (super.getBalance() -amountToWithdraw < 0 && super.getBalance() -amountToWithdraw > -100) {
             return super.withdraw(amountToWithdraw+10); //if we want to withdraw money and our account balance is less than 0 or more than -100 then you are charged an overdraft fee of 10
-    } else {
+    } else if(super.getBalance()-amountToWithdraw>0) {
+            return super.withdraw(amountToWithdraw);
+        }
+
             return getBalance(); //Otherwise return current balance
         }
-} }
+}
