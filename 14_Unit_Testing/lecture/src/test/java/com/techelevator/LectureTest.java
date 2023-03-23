@@ -7,8 +7,11 @@ import org.junit.Test; // The @Test annotation is used to label methods that sho
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /* Like all other Java code, unit testing code is defined within a class.
- * Each test class will typically contain all of the unit tests for a single
+ * Each test class will typically contain all the unit tests for a single
  * "unit" of production code.
  *
  * If the "unit" is a single class from the production code, then the
@@ -17,46 +20,55 @@ import org.junit.runners.MethodSorters;
  * production class with "Test" at the end.  For example, the test class
  * for the production class "Foo" would be "FooTest"
  */
+
+// Class annotation - Run tests alphabetically
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
+/*
+ * TEST CLASS DECLARATION
+ */
 public class LectureTest {
 
-	/* If a method is annotated with @Before, it will be executed immediately prior to every test.
-	 * It is intended to be used when there is a repetitive setup (i.e. "Arrange") task that is
-	 * performed by several tests */
-	@Before
-	public void setup() {
-		System.out.println("setup");
-	}
+	// Shared property of the object type being tested
 
-	/* If a method is annotated with @After, it will be executed immediately after every test.
-	 * It is intended to be used when there is a repetitive cleanup task that is performed by
-	 * several tests (e.g. deleting temp files, rolling back database transactions, etc) */
-	@After
-	public void teardown() {
-		System.out.println("teardown");
-	}
 
-	/* Each test is implemented as a method with the @Test annotation. When the JUnit
-	 * framework is invoked, it looks for these @Test annotations on the test class
-	 * and runs such methods as tests.
-	 *
-	 * You will notice that the naming convention used in the test methods below
-	 * deviates from standard Java method naming conventions by using underscores
-	 * between words instead of camelCase. This is my own personal convention and
-	 * should not be construed as a general standard or convention. You can also
-	 * use camelCase for test method names. You should follow the norm at whatever
-	 * development organization you join.
-	 *
-	 * Regardless of whether you use camelCase or underscores, your method names
-	 * should be very descriptive to the point of being overly verbose. This is fine
-	 * because you will never write code to invoke your test methods, they are only
-	 * invoked by the Junit framework, hence descriptive trumps concise.
-	 *
-	 * Test methods always:
-	 *     - are public
-	 *     - return void
-	 *     - take no arguments
-	 */
+/*
+ * SETUP: If a method is annotated with @Before, it will be executed
+ * immediately prior to every test. It is intended to be used when there is a
+ * repetitive setup (i.e. "Arrange") task that is performed by several tests.
+ */
+
+
+/*
+ * CLEANUP: If a method is annotated with @After, it will be executed immediately
+ * after every test. It is intended to be used when there is a repetitive cleanup
+ * task that is performed by several tests (e.g. deleting temp files, rolling back
+ * database transactions, etc.)
+ */
+
+
+/*
+ * TESTS: Each test is implemented as a method with the @Test annotation. When the JUnit
+ * framework is invoked, it looks for these @Test annotations on the test class
+ * and runs such methods as tests.
+ *
+ * You will notice that the naming convention used in the test methods below
+ * deviates from standard Java method naming conventions by using underscores
+ * between words instead of camelCase. This is my own personal convention and
+ * should not be construed as a general standard or convention. You can also
+ * use camelCase for test method names. You should follow the norm at whatever
+ * development organization you join.
+ *
+ * Regardless of whether you use camelCase or underscores, your method names
+ * should be very descriptive to the point of being overly verbose. This is fine
+ * because you will never write code to invoke your test methods, they are only
+ * invoked by the Junit framework, hence descriptive trumps concise.
+ *
+ * Test methods always:
+ *     - are public
+ *     - return void
+ *     - take no arguments
+ */
 	@Test
 	public void length_returns_the_number_of_characters_in_a_String() {
 		System.out.println("length_returns_the_number_of_characters_in_a_String"); // FOR DEMONSTRATION PURPOSES ONLY, don't do this in your own tests
@@ -73,7 +85,7 @@ public class LectureTest {
 	public void startsWith_returns_true_if_a_string_starts_with_the_specified_characters() {
 		System.out.println("startsWith_returns_true_if_a_string_starts_with_the_specified_characters"); // FOR DEMONSTRATION PURPOSES ONLY, don't do this in your own tests
 
-		/* The assertTrue method validates that the boolean value provided as an arugment
+		/* The assertTrue method validates that the boolean value provided as an argument
 		 * is true and fails the test if it is false. */
 
 		String theString = "Hello World!"; // Arrange
@@ -98,6 +110,27 @@ public class LectureTest {
 	}
 
 	public void this_method_is_not_a_test_because_it_does_not_have_the_Test_annotation() {
-		// This method will not be run by Junit, because it's not a test
+		System.out.println("This test shouldn't run.");
 	}
+
+	//@Test public void test_or35_send_in_15_returns_true() {}
+
+	//@Test public void test_or35_send_in_6_returns_true() {}
+
+	//@Test public void test_or35_send_in_1_returns_false() {}
+
+	//@Test public void test_doubleNumber_send_in_3_return_3() {}
+
+	//@Test public void test_doubleNumber_send_in_4_return_8() {}
+
+	//@Test public void test_doubleNumber_send_in_0_return_0() {}
+
+	// * * * PARTNER/GROUP ACTIVITY: Create tests for the firstTwo() method * * *
+
+	//@Test public void test_thirdDouble_send_6_return_2() {}
+
+	//@Test public void test_doubleAllNumbers_send_in_2_3_4_return_4_6_8() {}
+
+	// @Test public void test_robPeterToPayPaul_send_in_map_Peter_has_2000_and_Paul_has_50_returns_Peter_1000_Paul_1050(){}
+
 }
