@@ -14,6 +14,5 @@ public class FrontTimesTest {
         Assert.assertEquals("", frontTimes.generateString("", 3));
         Assert.assertEquals("", frontTimes.generateString("Chocolate", 0));
         Assert.assertEquals("", frontTimes.generateString("Chocolate", -1));
-
     }
 }
