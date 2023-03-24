@@ -30,45 +30,54 @@ import java.util.Map;
 public class LectureTest {
 
 	// Shared property of the object type being tested
+	Lecture lecture;
+
+	/*
+	 * SETUP: If a method is annotated with @Before, it will be executed
+	 * immediately prior to every test. It is intended to be used when there is a
+	 * repetitive setup (i.e. "Arrange") task that is performed by several tests.
+	 */
+@Before
+public void setup() { // made this so we dont need to create a new lecture in every Arrange step
+	lecture = new Lecture();
+	System.out.println("Setup with the @Before method");
+}
+
+	/*
+	 * CLEANUP: If a method is annotated with @After, it will be executed immediately
+	 * after every test. It is intended to be used when there is a repetitive cleanup
+	 * task that is performed by several tests (e.g. deleting temp files, rolling back
+	 * database transactions, etc.)
+	 */
+	@After
+	public void cleanup() {
+		lecture = new Lecture();
+		System.out.println("Setup with the @After method");
+	}
 
 
-/*
- * SETUP: If a method is annotated with @Before, it will be executed
- * immediately prior to every test. It is intended to be used when there is a
- * repetitive setup (i.e. "Arrange") task that is performed by several tests.
- */
-
-
-/*
- * CLEANUP: If a method is annotated with @After, it will be executed immediately
- * after every test. It is intended to be used when there is a repetitive cleanup
- * task that is performed by several tests (e.g. deleting temp files, rolling back
- * database transactions, etc.)
- */
-
-
-/*
- * TESTS: Each test is implemented as a method with the @Test annotation. When the JUnit
- * framework is invoked, it looks for these @Test annotations on the test class
- * and runs such methods as tests.
- *
- * You will notice that the naming convention used in the test methods below
- * deviates from standard Java method naming conventions by using underscores
- * between words instead of camelCase. This is my own personal convention and
- * should not be construed as a general standard or convention. You can also
- * use camelCase for test method names. You should follow the norm at whatever
- * development organization you join.
- *
- * Regardless of whether you use camelCase or underscores, your method names
- * should be very descriptive to the point of being overly verbose. This is fine
- * because you will never write code to invoke your test methods, they are only
- * invoked by the Junit framework, hence descriptive trumps concise.
- *
- * Test methods always:
- *     - are public
- *     - return void
- *     - take no arguments
- */
+	/*
+	 * TESTS: Each test is implemented as a method with the @Test annotation. When the JUnit
+	 * framework is invoked, it looks for these @Test annotations on the test class
+	 * and runs such methods as tests.
+	 *
+	 * You will notice that the naming convention used in the test methods below
+	 * deviates from standard Java method naming conventions by using underscores
+	 * between words instead of camelCase. This is my own personal convention and
+	 * should not be construed as a general standard or convention. You can also
+	 * use camelCase for test method names. You should follow the norm at whatever
+	 * development organization you join.
+	 *
+	 * Regardless of whether you use camelCase or underscores, your method names
+	 * should be very descriptive to the point of being overly verbose. This is fine
+	 * because you will never write code to invoke your test methods, they are only
+	 * invoked by the Junit framework, hence descriptive trumps concise.
+	 *
+	 * Test methods always:
+	 *     - are public
+	 *     - return void
+	 *     - take no arguments
+	 */
 	@Test
 	public void length_returns_the_number_of_characters_in_a_String() {
 		System.out.println("length_returns_the_number_of_characters_in_a_String"); // FOR DEMONSTRATION PURPOSES ONLY, don't do this in your own tests
@@ -113,24 +122,107 @@ public class LectureTest {
 		System.out.println("This test shouldn't run.");
 	}
 
-	//@Test public void test_or35_send_in_15_returns_true() {}
+	@Test
+	public void test_or35_send_in_15_returns_true() {
+		//Arrange
+		Lecture lecture = new Lecture();
+		boolean expected = true;
 
-	//@Test public void test_or35_send_in_6_returns_true() {}
+		//Act
+		boolean actual = lecture.or35(15);
 
-	//@Test public void test_or35_send_in_1_returns_false() {}
+		//Assert
+		Assert.assertEquals(expected, actual);
+	}
 
-	//@Test public void test_doubleNumber_send_in_3_return_3() {}
+	@Test
+	public void test_or35_send_in_6_returns_true() {
 
+
+		//Arrange
+		Lecture lecture = new Lecture();
+		boolean expected = true;
+
+		//Act
+		boolean actual = lecture.or35(6);
+
+		//Assert
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
+	public void test_or35_send_in_1_returns_false() {
+
+
+	//Arrange
+	Lecture lecture = new Lecture();
+	boolean expected = false;
+	//Act
+	boolean actual = lecture.or35(1);
+	//Assert
+	Assert.assertEquals(expected, actual);
+}
+	@Test public void test_doubleNumber_send_in_3_return_3() {
+		Lecture lecture = new Lecture();
+		int expected = 3;
+
+		int actual = lecture.doubleNumber(3);
+
+		Assert.assertEquals("ERROR: Expected 3 returned" + actual, expected, actual);
+	}
 	//@Test public void test_doubleNumber_send_in_4_return_8() {}
 
-	//@Test public void test_doubleNumber_send_in_0_return_0() {}
+	@Test public void test_doubleNumber_send_in_0_return_0() {
+		Lecture lecture = new Lecture();
+
+		Assert.assertEquals(0,lecture.doubleNumber(0));
+	}
+
+
 
 	// * * * PARTNER/GROUP ACTIVITY: Create tests for the firstTwo() method * * *
 
-	//@Test public void test_thirdDouble_send_6_return_2() {}
+	@Test public void test_thirdDouble_send_6_return_2() {
+		String expected = "Ye";
 
-	//@Test public void test_doubleAllNumbers_send_in_2_3_4_return_4_6_8() {}
+		String actual = lecture.firstTwo("Yellow");
 
-	// @Test public void test_robPeterToPayPaul_send_in_map_Peter_has_2000_and_Paul_has_50_returns_Peter_1000_Paul_1050(){}
+		Assert.assertEquals(expected,actual);
+	}
+
+	@Test public void test_doubleAllNumbers_send_in_2_3_4_return_4_6_8() {
+		//Arrange
+		int [] expected = {4, 6, 8};
+
+		//Act
+		int[] actual = lecture.doubleAllNumbers(new int[] {2,3,4});
+
+		//Assert
+		Assert.assertArrayEquals(expected, actual); // since comparing arrays use assert Array equals
+
+	}
+
+	@Test public void test_robPeterToPayPaul_send_in_map_Peter_has_2000_and_Paul_has_50_returns_Peter_1000_Paul_1050(){
+		//Arrange
+		Map<String, Integer> expected = new HashMap<>();
+		expected.put("Peter", 1000);
+		expected.put("Paul", 1050);
+
+		Map<String, Integer> test = new HashMap<>();
+		test.put("Peter", 2000);
+		test.put("Paul", 50);
+
+		//Act
+		Map<String, Integer> actual = lecture.robPeterToPayPaul(test);
+		Integer actualPeter = actual.get("Peter");
+		Integer actualPaul = actual.get("Paul");
+		Integer expectedPeter = expected.get("Peter");
+		Integer expectedPaul = expected.get("Paul");
+
+		//Assert
+		Assert.assertEquals(expectedPeter, actualPeter);
+		Assert.assertEquals(expectedPaul, actualPaul);
+
+	}
 
 }

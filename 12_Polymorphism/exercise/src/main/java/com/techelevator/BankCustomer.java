@@ -42,7 +42,7 @@ public class BankCustomer implements Accountable{
 
     public Accountable[] getAccounts() {
         Accountable[] arrayOfAccounts = new Accountable[accounts.size()]; //created new array and set it size
-        accounts.toArray(arrayOfAccounts); // add the accounts to the array and populate array using the accounts
+        accounts.toArray(arrayOfAccounts); // add the accounts from the list to the array and populate array using the accounts
         return arrayOfAccounts; //return the new array
 }
     public void addAccount (Accountable newAccount) {
