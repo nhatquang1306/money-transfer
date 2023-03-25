@@ -1,6 +1,6 @@
 package org.example;
 
-public class StaticTest {
+public class StaticTest  {
 
     static int counter;
 
