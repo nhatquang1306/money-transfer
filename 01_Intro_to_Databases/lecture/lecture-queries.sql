@@ -1,19 +1,22 @@
 -- SELECT
 -- Use a SELECT statement to return a literal string
-
+SELECT 'Hello World!';
 
 -- Use a SELECT statement to add two numbers together (and label the result "sum")
-
+SELECT 2+5 AS SUM;
 
 
 -- SELECT ... FROM
 -- Write queries to retrieve...
-
+SELECT state_name
+FROM state;
 -- The names from all the records in the state table
-
+SELECT city_name, population
+FROM city;
 
 -- The names and populations of all cities
-
+SELECT *
+FROM park;
 
 -- All columns from the park table
 
@@ -23,18 +26,30 @@
 -- Write queries to retrieve...
 
 -- The names of cities in California (CA)
-
+SELECT city_name
+FROM city
+WHERE state_abbreviation = 'CA';
 
 -- The names and state abbreviations of cities NOT in California
-
+SELECT city_name
+FROM city
+WHERE state_abbreviation != 'CA';
 
 -- The names and areas of cities smaller than 25 square kilometers 
-
+SELECT city_name, state_abbreviation, city.area
+FROM city
+WHERE area < 25;
 
 -- The names from all records in the state table that have no assigned census region
+SELECT state_name, census_region
+FROM state
+WHERE census_region IS NULL;
 
 
 -- The names and census regions from all records in the state table that have an assigned census region
+SELECT state_name, census_region
+FROM state
+WHERE census_region IS NOT NULL;
 
 
 
@@ -42,13 +57,19 @@
 -- Write queries to retrieve...
 
 -- The names, areas, and populations of cities smaller than 25 sq. km. with more than 100,000 people
-
+SELECT city_name, area, population
+FROM city
+WHERE city.area < 25 AND population > 100000;
 
 -- The names and census regions of all states (and territories and districts) not in the Midwest region (including those that don't have any census region)
-
+SELECT state_name, census_region
+FROM state
+WHERE census_region != 'Midwest' OR census_region IS NULL;
 
 -- The names, areas, and populations of cities in California (CA) or Florida (FL)
-
+SELECT name, area, population
+FROM city
+W
 
 -- The names, areas, and populations of cities in New England -- Connecticut (CT), Maine (ME), Massachusetts (MA), New Hampshire (NH), Rhode Island (RI) and Vermont (VT)
 
@@ -65,7 +86,6 @@
 
 -- Write a query to retrieve the names of all cities and notice repeats (like Springfield and Columbus)
 
-
 -- Do it again, but without the repeats (note the difference in row count)
 
 
@@ -74,13 +94,19 @@
 -- Write queries to retrieve...
 
 -- The names of all cities that begin with the letter "A"
-
+SELECT city_name
+FROM city
+WHERE city_name LIKE '%A%';
 
 -- The names of all cities that end with "Falls"
-
+SELECT city_name
+FROM city
+WHERE city_name LIKE '% Falls';
 
 -- The names of all cities that contain a space
-
+SELECT city_name
+FROM city
+WHERE city_name LIKE '% %';
 
 
 -- BETWEEN
