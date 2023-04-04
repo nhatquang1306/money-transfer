@@ -1,4 +1,6 @@
 -- Part one: ORDER BY
+SELECT topping_name
+FROM topping
 
 
 
