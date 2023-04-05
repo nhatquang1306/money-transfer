@@ -1,38 +1,66 @@
 package com.techelevator;
 
+import java.time.LocalDate;
+
 public class Car {
-    //instance variables
     private int year;
     private String make;
-    private boolean isClassicCar;
     private int age;
+    private boolean isClassicCar;
 
-    //constructor
-
-    public Car(int year, String make, boolean isClassicCar) {
+    public Car(boolean isClassicCar, int year, String make) {
         this.year = year;
         this.make = make;
         this.isClassicCar = isClassicCar;
+        this.age = LocalDate.now().getYear() - year; // calculation for age using localdate to get current year
     }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
     public int getAge() {
-        int currentYear = 2023;
-        return currentYear - year;
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public boolean isClassicCar() {
+        return isClassicCar;
+    }
+
+    public void setClassicCar(boolean classicCar) {
+        isClassicCar = classicCar;
     }
 
     //method
     public boolean needsECheck(int yearToCheck) {
-        if (age < 4 || age > 25 || isClassicCar == true) {
-            return false;
-        } else if (yearToCheck % 2 == 0) {
-            return true;
-        } else if (yearToCheck % 2 == 1) {
-            return true;
-        } else {
+        if (age<4 || age>25 || isClassicCar==true) { //exemptions
             return false;
         }
+        if(yearToCheck%2==0 && year%2==0) { // even model year vehicles must be tested if yearToCheck is even
+            return true;
+        }
+        if (yearToCheck%2==1 && year%2==1) {
+            return true;
+        }
+        return false;
     }
-    @Override
     public String toString() {
-            return "CAR - " + year + " - " + make;
-        }
+        return "CAR" + " - " + year + " - " + make;
+    }
 }

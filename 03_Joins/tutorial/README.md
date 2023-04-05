@@ -1,4 +1,4 @@
-# SQL joins tutorial
+   # SQL joins tutorial
 
 In this tutorial, you'll learn:
 
