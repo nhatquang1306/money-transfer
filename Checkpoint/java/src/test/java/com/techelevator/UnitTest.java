@@ -6,25 +6,53 @@ import org.junit.Test;
 import java.util.List;
 public class UnitTest {
     @Test
-    public void testECheck() {
-        Car car = new Car(true, 2010, "Ford");
-        Car car1 = new Car(false, 1969, "Toyota");
-        Car car2 = new Car(false, 2020, "Honda");
-        Car car3 = new Car(false, 2018, "Ford");
-        Car car4 = new Car(false, 2017, "Toyota");
-        Assert.assertEquals(false, car.needsECheck(5));
-        Assert.assertEquals(false, car1.needsECheck(5));
-        Assert.assertEquals(false, car2.needsECheck(5));
-        Assert.assertEquals(true, car3.needsECheck(6));
-        Assert.assertEquals(false, car3.needsECheck(5));
-        Assert.assertEquals(true, car4.needsECheck(5));
-        Assert.assertEquals(false, car4.needsECheck(6));
+    public void getAge_of_1995_returns_28() {
+        //Arrange
+        Car car = new Car(1995, "make", false);
+        //Act
+        int actualResult = car.getAge();
+        int expectedResult = 28;
+
+        //Assert
+        Assert.assertEquals(expectedResult, actualResult);
+}
+@Test
+    public void eCheck_isClassic_returns_false() {
+        //if it is a classic car, it is exempt, returns false
+    Car car = new Car(2021, "make", true);
+
+    Assert.assertFalse(car.needsECheck(2019));
+}
+    @Test
+    public void eCheck_age_under4_returns_false() {
+        Car car = new Car(2021, "make", true);
+
+        Assert.assertFalse(car.needsECheck(2019));
     }
     @Test
-    public void testAgeCalculation() {
-        Car car = new Car(false, 2000, "Ford");
-        Car car1 = new Car(true, 1970, "Toyota");
-        Assert.assertEquals(23, car.getAge());
-        Assert.assertEquals(53, car1.getAge());
+    public void eCheck_age_over25_returns_false() {
+        Car car = new Car(1995, "make", true);
+
+        Assert.assertFalse(car.needsECheck(2019));
     }
-}
+    @Test
+    public void eCheck_even_year_and_yearToCheck_even_returns_true() {
+        //if it is a classic car, it is exempt, returns false
+        Car car = new Car(2018, "make", false);
+
+        Assert.assertTrue(car.needsECheck(2022));
+    }
+    @Test
+    public void eCheck_odd_year_and_yearToCheck_odd_returns_true() {
+        //if it is a classic car, it is exempt, returns false
+        Car car = new Car(2019, "make", false);
+
+        Assert.assertTrue(car.needsECheck(2023));
+    }
+    @Test
+    public void eCheck_even_year_and_yearToCheck_odd_returns_false() {
+        //if it is a classic car, it is exempt, returns false
+        Car car = new Car(2018, "make", false);
+
+        Assert.assertFalse(car.needsECheck(2023));
+}}

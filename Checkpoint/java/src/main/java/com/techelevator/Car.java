@@ -8,43 +8,27 @@ public class Car {
     private int age;
     private boolean isClassicCar;
 
-    public Car(boolean isClassicCar, int year, String make) {
+    public Car(int year, String make, boolean isClassicCar) {
         this.year = year;
         this.make = make;
         this.isClassicCar = isClassicCar;
-        this.age = LocalDate.now().getYear() - year; // calculation for age using localdate to get current year
+        //age is a derived property
     }
-
     public int getYear() {
         return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
     public String getMake() {
         return make;
     }
 
-    public void setMake(String make) {
-        this.make = make;
-    }
-
+    //derived property!
     public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+        return LocalDate.now().getYear() - year;
     }
 
     public boolean isClassicCar() {
         return isClassicCar;
-    }
-
-    public void setClassicCar(boolean classicCar) {
-        isClassicCar = classicCar;
     }
 
     //method
@@ -61,6 +45,6 @@ public class Car {
         return false;
     }
     public String toString() {
-        return "CAR" + " - " + year + " - " + make;
+        return "CAR - " + year + " - " + make;
     }
 }
