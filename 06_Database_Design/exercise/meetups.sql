@@ -73,10 +73,10 @@ VALUES ('Self Betterment'),
 ('Getting a Hand');
 
 INSERT INTO event_ (name, description, start_date_time, duration, group_number)
-VALUES ('Brian Garza Self Discovery Seminar', 'Discovering your inner bald old man', '2023-04-18', 180, 1),
-('Alex Stone in the path to perfect spelling', 'How to spell your name in two to three easy words', '2023-04-20', 60, 2),
-('Quangs Handy Coding Time', 'How to become a rich handsome coder man', '2023-04-23', 90, 3),
-('Kevin Little Presentation', 'Being super handsome in three easy steps', '2023-04-14', 200, 1);
+VALUES ('Brian Garza Self Discovery Seminar', 'Discovering your inner bald old man', '2023-04-18 02:20:20', 180, 1),
+('Alex Stone in the path to perfect spelling', 'How to spell your name in two to three easy words', '2023-04-20 02:00:00', 60, 2),
+('Quangs Handy Coding Time', 'How to become a rich handsome coder man', '2023-04-23 01:01:01', 90, 3),
+('Kevin Little Presentation', 'Being super handsome in three easy steps', '2023-04-14 04:40:00', 200, 1);
 
 INSERT INTO member_event (member_number, event_number)
 VALUES (1,1),
@@ -90,4 +90,6 @@ VALUES (1,1),
 (3,2),
 (4,2),
 (5,3),
-(6,3)
+(6,3);
+
+SELECT * FROM event_;
