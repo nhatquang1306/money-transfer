@@ -2,6 +2,7 @@ package com.techelevator.movies.dao;
 
 import com.techelevator.movies.model.Collection;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -17,16 +18,46 @@ public class JdbcCollectionDao implements CollectionDao{
 
     @Override
     public List<Collection> getCollections() {
-        return null;
+        List<Collection> collectionList = new ArrayList<>();
+        String sql = "Select * From collection;";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql);
+        while(result.next()) {
+            Collection collection = new Collection();
+            collection.setId(result.getInt("collection_id"));
+            collection.setName(result.getString("collection_name"));
+            collectionList.add(collection);
+        }
+        return collectionList;
     }
 
     @Override
     public Collection getCollectionById(int id) {
-        return new Collection(-1, "Not implemented yet");
+        Collection collection = new Collection();
+        String sql = "Select * From collection WHERE collection_id = ?;";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
+        if (result.next()) {
+            collection.setId(result.getInt("collection_id"));
+            collection.setName(result.getString("collection_name"));
+        } else {
+            return null;
+        }
+        return collection;
     }
 
     @Override
     public List<Collection> getCollectionsByName(String name, boolean useWildCard) {
-        return null;
+        List<Collection> collectionList = new ArrayList<>();
+        String sql = "Select * From collection WHERE collection_name ILIKE ?;";
+        if (useWildCard){
+            name= "%" + name + "%";
+        }
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, name);
+        while(result.next()) {
+            Collection collection = new Collection();
+            collection.setId(result.getInt("collection_id"));
+            collection.setName(result.getString("collection_name"));
+            collectionList.add(collection);
+        }
+        return collectionList;
     }
 }

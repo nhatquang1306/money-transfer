@@ -1,0 +1,14 @@
+SELECT COUNT(*) AS count
+FROM park;
+
+SELECT MIN(date_established) AS date_established FROM park;
+
+SELECT ROUND(AVG(area),2) AS avg_area from park;
+
+SELECT * from park;
+
+SELECT park_id, park_name, date_established, area, has_camping
+FROM park
+ORDER BY RANDOM()
+LIMIT 1;
+
