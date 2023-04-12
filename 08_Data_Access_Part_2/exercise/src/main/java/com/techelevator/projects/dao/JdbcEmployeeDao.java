@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.techelevator.projects.model.Project;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -30,12 +31,16 @@ public class JdbcEmployeeDao implements EmployeeDao {
 		Employee employee = null;
 		String sql = EMPLOYEE_SELECT +
 				" WHERE e.employee_id=?";
-
+try{
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
 		if (results.next()) {
 			employee = mapRowToEmployee(results);
 		}
-
+} catch (CannotGetJdbcConnectionException e) {
+	throw new DaoException("Unable to connect to server or database", e);
+} catch (BadSqlGrammarException e)	{
+	throw new DaoException("SQL syntax error", e);
+}
 		return employee;
 	}
 
@@ -43,13 +48,17 @@ public class JdbcEmployeeDao implements EmployeeDao {
 	public List<Employee> getEmployees() {
 		List<Employee> allEmployees = new ArrayList<>();
 		String sql = EMPLOYEE_SELECT;
-
+try {
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 		while (results.next()) {
 			Employee employeeResult = mapRowToEmployee(results);
 			allEmployees.add(employeeResult);
 		}
-
+} catch (CannotGetJdbcConnectionException e) {
+	throw new DaoException("Unable to connect to server or database", e);
+} catch (BadSqlGrammarException e)	{
+	throw new DaoException("SQL syntax error", e);
+}
 		return allEmployees;
 	}
 
@@ -58,13 +67,17 @@ public class JdbcEmployeeDao implements EmployeeDao {
 		List<Employee> allEmployees = new ArrayList<>();
 		String sql = EMPLOYEE_SELECT +
 				" WHERE e.first_name ILIKE ? AND e.last_name ILIKE ?";
-
+try {
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sql, "%" + firstName + "%", "%" + lastName + "%");
 		while (results.next()) {
 			Employee employeeResult = mapRowToEmployee(results);
 			allEmployees.add(employeeResult);
 		}
-
+} catch (CannotGetJdbcConnectionException e) {
+	throw new DaoException("Unable to connect to server or database", e);
+} catch (BadSqlGrammarException e)	{
+	throw new DaoException("SQL syntax error", e);
+}
 		return allEmployees;
 	}
 
@@ -74,13 +87,17 @@ public class JdbcEmployeeDao implements EmployeeDao {
 		String sql =  EMPLOYEE_SELECT +
 				"JOIN project_employee pe ON e.employee_id = pe.employee_id " +
 				"WHERE pe.project_id = ?";
-
+try {
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sql, projectId);
 		while (results.next()) {
 			Employee employeeResult = mapRowToEmployee(results);
 			allEmployees.add(employeeResult);
 		}
-
+} catch (CannotGetJdbcConnectionException e) {
+	throw new DaoException("Unable to connect to server or database", e);
+} catch (BadSqlGrammarException e)	{
+	throw new DaoException("SQL syntax error", e);
+}
 		return allEmployees;
 	}
 
@@ -89,35 +106,109 @@ public class JdbcEmployeeDao implements EmployeeDao {
 		List<Employee> allEmployees = new ArrayList<>();
 		String sql = EMPLOYEE_SELECT +
 				" WHERE e.employee_id NOT IN (SELECT DISTINCT employee_id FROM project_employee)";
-
+try {
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 		while (results.next()) {
 			Employee employeeResult = mapRowToEmployee(results);
 			allEmployees.add(employeeResult);
 		}
-
+} catch (CannotGetJdbcConnectionException e) {
+	throw new DaoException("Unable to connect to server or database", e);
+} catch (BadSqlGrammarException e)	{
+	throw new DaoException("SQL syntax error", e);
+}
 		return allEmployees;
 	}
 
 	@Override
 	public Employee createEmployee(Employee employee) {
-		throw new DaoException("createEmployee() not implemented");
+		Employee employee1 = null;
+		String sql = "INSERT INTO employee (department_id, first_name, last_name, birth_date, hire_date)" + "VALUES (?, ?, ?, ?, ?) RETURNING employee_id;";
+
+		try {
+			int newEmployeeId = jdbcTemplate.queryForObject(sql, int.class, employee.getDepartmentId(), employee.getFirstName(), employee.getLastName(), employee.getBirthDate(), employee.getHireDate());
+
+			employee1 = getEmployeeById(newEmployeeId);
+		} catch (CannotGetJdbcConnectionException e) {
+			throw new DaoException("Unable to connect to server or database", e);
+		} catch (BadSqlGrammarException e) {
+			throw new DaoException("SQL syntax error", e);
+		} catch (DataIntegrityViolationException e) {
+			throw new DaoException("Data integrity violation");
+		}
+		return employee1;
 	}
 	
 	@Override
 	public Employee updateEmployee(Employee employee) {
-		throw new DaoException("updateEmployee() not implemented");
+		Employee updatedEmployee = null;
+		String sql = "Update employee Set department_id = ?, first_name = ?, last_name = ?, " +
+				"birth_date = ?, hire_date = ? Where employee_id = ?;";
+
+		try {
+			int numberOfRows = jdbcTemplate.update(sql, employee.getDepartmentId(), employee.getFirstName(),
+					employee.getLastName(), employee.getBirthDate(), employee.getHireDate(), employee.getId());
+
+			if(numberOfRows == 0){
+				throw new DaoException("Zero rows affected, expected at least one");
+			}else{
+				updatedEmployee = getEmployeeById(employee.getId());
+			}
+
+		} catch (CannotGetJdbcConnectionException e) {
+			throw new DaoException("Unable to connect to server or database", e);
+		}catch (BadSqlGrammarException e) {
+			throw new DaoException("SQL syntax error", e);
+		} catch (DataIntegrityViolationException e) {
+			throw new DaoException("Data integrity violation", e);
+		}
+		return updatedEmployee;
 	}
+
 
 	@Override
 	public int deleteEmployeeById(int id) {
-		throw new DaoException("deleteEmployeeById() not implemented");
+		int numberOfRows = 0;
+		String projectEmployeeSql = "DELETE FROM project_employee WHERE employee_id=?;";
+		String employeeSql = "DELETE FROM employee WHERE employee_id = ?;";
+
+
+		try {
+			jdbcTemplate.update(projectEmployeeSql, id );
+			numberOfRows = jdbcTemplate.update(employeeSql, id);
+
+		} catch (CannotGetJdbcConnectionException e) {
+			throw new DaoException("Unable to connect to server or database", e);
+		} catch (BadSqlGrammarException e) {
+			throw new DaoException("SQL syntax error", e);
+		} catch (DataIntegrityViolationException e) {
+			throw new DaoException("Data integrity violation");
+		}
+		return numberOfRows;
 	}
 
 	@Override
 	public int deleteEmployeesByDepartmentId(int departmentId) {
-		throw new DaoException("deleteEmployeeByDepartmentId() not implemented");
+		int numberOfRows = 0;
+		String projectEmployeeSql = "DELETE FROM project_employee WHERE employee_id IN (SELECT employee_id FROM employee WHERE department_id = ?);";
+		String employeeSql = "DELETE FROM employee WHERE department_id = ?;";
+
+
+		try {
+			jdbcTemplate.update(projectEmployeeSql, departmentId);
+			numberOfRows = jdbcTemplate.update(employeeSql, departmentId);
+
+		} catch (CannotGetJdbcConnectionException e) {
+			throw new DaoException("Unable to connect to server or database", e);
+		} catch (BadSqlGrammarException e) {
+			throw new DaoException("SQL syntax error", e);
+		} catch (DataIntegrityViolationException e) {
+			throw new DaoException("Data integrity violation");
+		}
+		return numberOfRows;
 	}
+
+
 
 	private Employee mapRowToEmployee(SqlRowSet result) {
 		Employee employee = new Employee();
