@@ -1,43 +1,43 @@
 Bug 1
 -----
 Test that demonstrates problem:
-
+getTimesheetsByEmployeeId_returns_list_of_all_timesheets_for_employee
 Expected output:
-
+2
 Actual output:
-
+1
 How did you fix this bug?
-
+By changing the if statement in JdbcTimesheetDao.java to a while loop as it is using a list we should loop through the statement instead of making it an if conditional.
 
 Bug 2
 -----
 Test that demonstrates problem:
-
+getTimesheetsByProjectId_returns_list_of_all_timesheets_for_project
 Expected output:
-
+3
 Actual output:
-
+1
 How did you fix this bug?
-
+replaced the WHERE portion of the SELECT statement in the JbdcTimesheetDao.java because this method wants the project_id and instead we were asking for the employee_id
 
 Bug 3
 -----
 Test that demonstrates problem:
-
+getBillableHours_returns_correct_total
 Expected output:
-
+0.0
 Actual output:
-
+2.0
 How did you fix this bug?
-
+The WHERE statement was missing the boolean Billable where it checked to see if a project number was billable.
 
 Bug 4
 -----
 Test that demonstrates problem:
-
+updated_timesheet_has_expected_values_when_retrieved
 Expected output:
-
+true
 Actual output:
-
+false
 How did you fix this bug?
-
+Had to add the billable condition to the sql string in the method.

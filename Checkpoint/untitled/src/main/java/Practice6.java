@@ -63,17 +63,36 @@ public class Practice6 {
 //            no14([7, 2, 3]) → true
 //    no14([1, 2, 3, 4]) → false
 //    no14([2, 3, 4]) → false
-        public static void main(String[] args) {
-            System.out.println(No14(new int[] {2,3,5,6}));
-}
+//        public static void main(String[] args) {
+//            System.out.println(No14(new int[] {2,3,5,6}));
+//}
+//
+//        public static boolean No14(int [] nums) {
+//            for (int i = 0 ; i<=nums.length-1; i++) {
+//                if(nums[i] == 1 || nums[i] == 4) {
+//                    return false;
+//                }
+//
+//            } return true;
+//        }
 
-        public static boolean No14(int [] nums) {
-            for (int i = 0 ; i<=nums.length-1; i++) {
-                if(nums[i] == 1 || nums[i] == 4) {
-                    return false;
-                }
 
-            } return true;
-        }
+
+//    Days of Code: Day[12]
+//    Exercise 13: MakeEnds
+//    Create an integer array method called MakeEnds that takes in an integer array “nums”.
+//    Given an array of ints, return a new array length 2 containing the first and last elements from the original
+//    array. The original array will be length 1 or more.
+//    makeEnds([1, 2, 3]) → [1, 3]
+//    makeEnds([1, 2, 3, 4]) → [1, 4]
+//    makeEnds([7, 4, 6, 2]) → [7, 2]
+
+    public static int [] MakeEnds(int [] nums) {
+        int [] newArray = new int[2];
+        newArray[1] = nums [length-1];
+        newArray[0] = nums [0];
+    return newArray
+    }
+
 
 }
