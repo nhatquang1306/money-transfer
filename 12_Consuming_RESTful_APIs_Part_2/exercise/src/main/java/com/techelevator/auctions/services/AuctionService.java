@@ -17,18 +17,51 @@ public class AuctionService {
 
 
     public Auction add(Auction newAuction) {
-        // place code here
-        return null;
+        Auction addedAuction = null;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Auction> entity = new HttpEntity(newAuction, headers);
+
+        try {
+            addedAuction = restTemplate.postForObject(API_BASE_URL, entity, Auction.class);
+        } catch (ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        } catch (RestClientResponseException e) {
+            BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
+        }
+        return addedAuction;
     }
 
     public boolean update(Auction updatedAuction) {
-        // place code here
-        return false;
+        boolean auctionUpdated = false;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Auction> entity = new HttpEntity<>(updatedAuction, headers);
+
+        try {
+            restTemplate.put(API_BASE_URL + updatedAuction.getId(), entity);
+            auctionUpdated = true;
+        } catch (ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        } catch (RestClientResponseException e) {
+            BasicLogger.log(e.getRawStatusCode() + " " + e.getStatusText());
+        }
+
+        return auctionUpdated;
     }
 
     public boolean delete(int auctionId) {
-        // place code here
-        return false;
+        boolean auctionDeleted = false;
+        try {
+            restTemplate.delete(API_BASE_URL + auctionId);
+            auctionDeleted = true;
+    } catch (ResourceAccessException e) {
+        BasicLogger.log(e.getMessage());
+    } catch (RestClientResponseException e) {
+        BasicLogger.log(e.getRawStatusCode() + " " + e.getStatusText());
+    }
+
+        return auctionDeleted;
     }
 
     public Auction[] getAllAuctions() {
