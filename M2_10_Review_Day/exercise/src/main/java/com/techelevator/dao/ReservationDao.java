@@ -8,5 +8,5 @@ import java.util.List;
 public interface ReservationDao {
 
     int createReservation(int siteId, String name, LocalDate fromDate, LocalDate toDate);
-
+    List<Reservation> upcomingReservationsByParkId(int parkId);
 }

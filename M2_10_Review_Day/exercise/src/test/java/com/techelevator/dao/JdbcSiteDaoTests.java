@@ -1,6 +1,8 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Reservation;
 import com.techelevator.model.Site;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +27,9 @@ public class JdbcSiteDaoTests extends BaseDaoTests {
     }
 
     public void getAvailableSites_Should_ReturnSites() {
+//        List<Site> newList = dao.getSitesByParkId(1);
 
+        Assert.assertEquals(2, dao.getSitesByParkId(1).size());
     }
 
     public void getAvailableSitesDateRange_Should_ReturnSites() {
