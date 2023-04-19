@@ -56,7 +56,11 @@ public class MemoryReservationDao implements ReservationDao {
         }
         return null;
     }
-
+    /**
+     * @param reservation  the reservation to be created
+     * @param hotelId hotel id of the reservation
+     * @return returns the reservation that was created
+     */
     @Override
     public Reservation create(Reservation reservation, int hotelId) {
         reservation.setId(getMaxIdPlusOne());

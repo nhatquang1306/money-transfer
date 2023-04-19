@@ -10,7 +10,13 @@ public interface ReservationDao {
     List<Reservation> findByHotel(int hotelId);
 
     Reservation get(int reservationId);
-
+    /**
+     * creates a new reservation
+     *
+     * @param reservation  the reservation to be created
+     * @param hotelId hotel id of the reservation
+     * @return returns the reservation that was created
+     */
     Reservation create(Reservation reservation, int hotelId);
 
 }

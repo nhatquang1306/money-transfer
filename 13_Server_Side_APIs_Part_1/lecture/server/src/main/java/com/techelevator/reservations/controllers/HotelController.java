@@ -5,6 +5,7 @@ import com.techelevator.reservations.dao.MemoryHotelDao;
 import com.techelevator.reservations.dao.MemoryReservationDao;
 import com.techelevator.reservations.dao.ReservationDao;
 import com.techelevator.reservations.model.Hotel;
+import com.techelevator.reservations.model.Reservation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,5 +41,26 @@ public class HotelController {
     public Hotel get(@PathVariable int id) {
         return hotelDao.get(id);
     }
+
+    @RequestMapping(path = "/reservations", method = RequestMethod.GET)
+    public List<Reservation> reservationList(){
+        return reservationDao.findAll();
+    }
+
+    @RequestMapping(path = "/reservations/{id}", method = RequestMethod.GET)
+    public Reservation reservationById(@PathVariable int id) {
+        return reservationDao.get(id);
+    }
+
+    @RequestMapping(path = "hotels/{id}/reservations", method = RequestMethod.GET)
+    public List<Reservation> findByHotel(@PathVariable("id") int id){
+        return reservationDao.findByHotel(id);
+    }
+
+    @RequestMapping(path = "reservations", method = RequestMethod.POST)
+    public Reservation addReservation(@RequestBody Reservation reservation){
+        return reservationDao.create(reservation, reservation.getHotelId());
+    }
+
 
 }
