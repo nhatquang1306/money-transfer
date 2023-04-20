@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import javax.sql.DataSource;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,9 +33,13 @@ public class JdbcSiteDao implements SiteDao {
     }
     public List<Site> getSitesByParkId(int parkId){
         List<Site> getSites = new ArrayList<>();
-        String sql = "SELECT site.site_id FROM reservation JOIN site ON site.site_id = reservation.site_id JOIN campground ON campground.campground_id = site.campground_id JOIN park ON park.park_id = campground.park_id WHERE park.park_id = 1 AND from_date>'2023-04-18';";
+        String sql = "SELECT site.site_id, site.campground_id, site_number, max_occupancy, accessible, max_rv_length, utilities FROM reservation " +
+                "JOIN site ON site.site_id = reservation.site_id " +
+                "JOIN campground ON campground.campground_id = site.campground_id " +
+                "JOIN park ON park.park_id = campground.park_id " +
+                "WHERE park.park_id = ? AND from_date>?;";
         try{
-            SqlRowSet allRows = jdbcTemplate.queryForRowSet(sql, parkId);
+            SqlRowSet allRows = jdbcTemplate.queryForRowSet(sql, parkId, LocalDate.now());
             while(allRows.next()) {
                 getSites.add(mapRowToSite(allRows));
             }

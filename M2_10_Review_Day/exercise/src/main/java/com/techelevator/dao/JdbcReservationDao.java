@@ -39,10 +39,10 @@ public class JdbcReservationDao implements ReservationDao {
                 "JOIN site ON site.site_id = reservation.site_id " +
                 "JOIN campground ON campground.campground_id = site.campground_id " +
                 "JOIN park ON campground.park_id = park.park_id " +
-                "WHERE park.park_id = ? AND reservation.from_date BETWEEN '2023-04-19' AND '2023-05-18';";
+                "WHERE park.park_id = ? AND reservation.from_date BETWEEN ? AND ?;";
 
 try{
-    SqlRowSet allRows = jdbcTemplate.queryForRowSet(sql, parkId);
+    SqlRowSet allRows = jdbcTemplate.queryForRowSet(sql, parkId, LocalDate.now().plusDays(1), LocalDate.now().plusDays(30));
         while(allRows.next()){
             returnList.add(mapRowToReservation(allRows));
         }
