@@ -87,12 +87,27 @@ public class Practice6 {
 //    makeEnds([1, 2, 3, 4]) → [1, 4]
 //    makeEnds([7, 4, 6, 2]) → [7, 2]
 
-    public static int [] MakeEnds(int [] nums) {
-        int [] newArray = new int[2];
-        newArray[1] = nums [length-1];
-        newArray[0] = nums [0];
-    return newArray
-    }
+//    public static int [] MakeEnds(int [] nums) {
+//        int [] newArray = new int[2];
+//        newArray[1] = nums [length-1];
+//        newArray[0] = nums [0];
+//    return newArray
+//    }
+//
 
+//    Exercise 26: sumOdds
+//    Create an integer method that takes in no arguments or parameters.
+//    Return the sum of the odd integers between 1 and 100 inclusive.
+//            sumOdds() →  2500
+
+    public static int sumOdds() {
+        int count = 0;
+        for (int i=1;i<=100;i++){
+            if (i%2==1){
+                count+=i;
+            }
+        }
+return count;
+    }
 
 }
