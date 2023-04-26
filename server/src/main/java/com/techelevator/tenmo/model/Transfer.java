@@ -18,8 +18,8 @@ public class Transfer {
 
     public Transfer(int transferId, String usernameFrom, String usernameTo, double amount, String status, boolean request) {
         this.transferId = transferId;
-        this.usernameFrom = username_from;
-        this.usernameTo = username_to;
+        this.usernameFrom = usernameFrom;
+        this.usernameTo = usernameTo;
         this.amount = amount;
         this.status = status;
         this.request = request;

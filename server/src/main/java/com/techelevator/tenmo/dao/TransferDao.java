@@ -10,12 +10,12 @@ public interface TransferDao {
 
     double getBalance(String username);
 
-    int sendMoney(double amount, String username, String sendingUserName);
+    Transfer sendMoney(double amount, String username, String receivingUsername);
 
-    List<Transfer> seeTransfer();
-    Transfer findTransferByTransferId(int id);
-    boolean requestMoney(double amount, String username);
-    List<Transfer> seePending();
-    boolean approveRequest();
+    List<Transfer> seeTransfer(String username);
+    Transfer findTransferByTransferId(String username, int id);
+    Transfer requestMoney(double amount, String username, String receivingUsername);
+    List<Transfer> seePending(String username);
+    Transfer approveRequest(String username, int id);
 
 }
