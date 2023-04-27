@@ -36,7 +36,7 @@ public class JdbcTransferDao implements TransferDao {
 
     @Override
     public Transfer sendMoney(double amount, String username, String receivingUsername) {
-        if (receivingUsername.equals(username) || getBalance(receivingUsername) < amount) {
+        if (receivingUsername.equals(username) || getBalance(username) < amount) {
             return null;
         }
         int transferId = 0;
@@ -78,7 +78,7 @@ public class JdbcTransferDao implements TransferDao {
     @Override
     public Transfer findTransferByTransferId(String username, int id) {
         Transfer transfer = null;
-        String sql = "SELECT * FROM transfer WHERE transfer_id = ? AND username_from = ? OR username_to = ?;";
+        String sql = "SELECT * FROM transfer WHERE transfer_id = ? AND (username_from = ? OR username_to = ?);";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id, username, username);
             if (results.next()) {
@@ -111,10 +111,10 @@ public class JdbcTransferDao implements TransferDao {
     @Override
     public List<Transfer> seePending(String username) {
         List<Transfer> transfers = new ArrayList<>();
-        String sql = "SELECT * FROM transfer WHERE status = 'Pending' AND username_from = ? OR username_to = ?;";
+        String sql = "SELECT * FROM transfer WHERE status = 'Pending' AND (username_from = ? OR username_to = ?);";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username, username);
-            while(results.next()) {
+            while (results.next()) {
                 transfers.add(mapRowToTransfer(results));
             }
         } catch (CannotGetJdbcConnectionException e) {
@@ -126,22 +126,28 @@ public class JdbcTransferDao implements TransferDao {
     }
 
     @Override
-    public Transfer approveRequest(String username, int id) {
+    public Transfer approveRequest(String username, int id, String status) {
+        if (!status.equals("Approved") && !status.equals("Rejected")){
+            return null;
+        }
         Transfer transfer = findTransferByTransferId(username, id);
-        if (!transfer.getUsernameFrom().equals(username)) {
+        if (transfer== null) {
             return null;
         }
         double amount = transfer.getAmount();
-        if (getBalance(username) < amount) {
+        if (getBalance(username) < amount || !transfer.getUsernameFrom().equals(username)) {
             return null;
         }
         String usernameTo = transfer.getUsernameTo();
         String sql = "UPDATE account SET balance = balance - ? WHERE user_id = (SELECT user_id FROM tenmo_user WHERE username = ?);" +
                 "UPDATE account SET balance = balance + ? WHERE user_id = (SELECT user_id FROM tenmo_user WHERE username = ?);";
-        String sql2 = "UPDATE transfer SET status = 'Approved' WHERE transfer_id = ? AND username_from = ?;";
+        String sql2 = "UPDATE transfer SET status = ? WHERE transfer_id = ? AND username_from = ?;";
         try {
-            jdbcTemplate.update(sql, amount, username, amount, usernameTo);
-            jdbcTemplate.update(sql2, id, username);
+            jdbcTemplate.update(sql2, status, id, username);
+            if (status.equals("Approved")) {
+
+                jdbcTemplate.update(sql, amount, username, amount, usernameTo);
+            }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (BadSqlGrammarException e) {

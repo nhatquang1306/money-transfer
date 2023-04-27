@@ -16,6 +16,6 @@ public interface TransferDao {
     Transfer findTransferByTransferId(String username, int id);
     Transfer requestMoney(double amount, String username, String receivingUsername);
     List<Transfer> seePending(String username);
-    Transfer approveRequest(String username, int id);
+    Transfer approveRequest(String username, int id, String status);
 
 }
