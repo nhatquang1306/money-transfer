@@ -22,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controller to authenticate users.
@@ -66,7 +67,7 @@ public class AuthenticationController {
     public List<String> listOfUsers(){
         List<User> userList = userDao.findAll();
         List<String> usernames = new ArrayList<>();
-        for (User user: userList){
+        for (User user : userList) {
             usernames.add(user.getUsername());
         }
         return usernames;

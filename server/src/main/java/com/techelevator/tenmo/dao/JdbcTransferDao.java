@@ -36,9 +36,6 @@ public class JdbcTransferDao implements TransferDao {
 
     @Override
     public Transfer sendMoney(String username, Transfer transfer) {
-        if (transfer.getUsernameTo().equals(username) || getBalance(username) < transfer.getAmount()) {
-            return null;
-        }
         int transferId = 0;
         String sql = "UPDATE account SET balance = balance - ? WHERE user_id = (SELECT user_id FROM tenmo_user WHERE username = ?);" +
                 "UPDATE account SET balance = balance + ? WHERE user_id = (SELECT user_id FROM tenmo_user WHERE username = ?);";
@@ -94,9 +91,6 @@ public class JdbcTransferDao implements TransferDao {
 
     @Override
     public Transfer requestMoney(String username, Transfer transfer) {
-        if (transfer.getAmount() == 0) {
-            return null;
-        }
         int newId = 0;
         String sql = "INSERT INTO transfer (username_from, username_to, amount, status, request) VALUES (?, ?, ?, 'Pending', true) RETURNING transfer_id;";
         try {
@@ -131,9 +125,6 @@ public class JdbcTransferDao implements TransferDao {
     @Override
     public Transfer approveRequest(String username, int id, String status) {
         Transfer transfer = findTransferByTransferId(username, id);
-        if (transfer == null || getBalance(username) < transfer.getAmount() || !transfer.getUsernameFrom().equals(username)) {
-            return null;
-        }
         String sql = "UPDATE account SET balance = balance - ? WHERE user_id = (SELECT user_id FROM tenmo_user WHERE username = ?);" +
                 "UPDATE account SET balance = balance + ? WHERE user_id = (SELECT user_id FROM tenmo_user WHERE username = ?);";
         String sql2 = "UPDATE transfer SET status = ? WHERE transfer_id = ? AND username_from = ?;";
