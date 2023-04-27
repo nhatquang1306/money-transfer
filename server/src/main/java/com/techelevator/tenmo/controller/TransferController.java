@@ -7,13 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -28,13 +26,13 @@ public class TransferController {
         return transferDao.getBalance(principal.getName());
     }
 
-    @RequestMapping(path = "send/{username}/{amount}", method = RequestMethod.POST)
-    public Transfer sendMoney(Principal principal, @PathVariable double amount, @PathVariable String username) {
-        Transfer transfer = transferDao.sendMoney(amount, principal.getName(), username);
-        if (transfer == null) {
+    @RequestMapping(path = "send", method = RequestMethod.POST)
+    public Transfer sendMoney(Principal principal, @RequestBody Transfer transfer) {
+        Transfer returnedTransfer = transferDao.sendMoney(principal.getName(), transfer);
+        if (returnedTransfer == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Transfer Failed");
         } else {
-            return transfer;
+            return returnedTransfer;
         }
     }
     @RequestMapping(path = "transfers", method = RequestMethod.GET)
@@ -42,7 +40,7 @@ public class TransferController {
         return transferDao.seeTransfer(principal.getName());
     }
     @RequestMapping(path = "transfers/{id}", method = RequestMethod.GET)
-    public Transfer getTransferById(@PathVariable int id, Principal principal){
+    public Transfer getTransferById(Principal principal, @PathVariable int id){
         Transfer transfer = transferDao.findTransferByTransferId(principal.getName(), id);
         if (transfer == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No access to transfer.");
@@ -50,13 +48,13 @@ public class TransferController {
             return transfer;
         }
     }
-    @RequestMapping(path = "request/{username}/{amount}", method = RequestMethod.POST)
-    public Transfer requestMoney(Principal principal, @PathVariable String username, @PathVariable double amount) {
-        Transfer transfer = transferDao.requestMoney(amount, username, principal.getName());
-        if (transfer == null) {
+    @RequestMapping(path = "request", method = RequestMethod.POST)
+    public Transfer requestMoney(Principal principal, @RequestBody Transfer transfer) {
+        Transfer returnedTransfer = transferDao.requestMoney(principal.getName(), transfer);
+        if (returnedTransfer == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request Failed");
         } else {
-            return transfer;
+            return returnedTransfer;
         }
     }
     @RequestMapping(path = "transfers/pending", method = RequestMethod.GET)
@@ -65,9 +63,16 @@ public class TransferController {
     }
     @RequestMapping(path = "approve/{id}/{status}", method = RequestMethod.PUT)
     public Transfer approveRequest(Principal principal, @PathVariable int id, @PathVariable String status){
+        if (status.equals("approve")) {
+            status = "Approved";
+        } else if (status.equals("reject")) {
+            status = "Rejected";
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect Input.");
+        }
         Transfer transfer = transferDao.approveRequest(principal.getName(), id, status);
         if (transfer == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect Input Or Insufficient Funds.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect Input or Insufficient Funds.");
         } else {
             return transfer;
         }
