@@ -20,6 +20,10 @@ public class JdbcTransferDao implements TransferDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    public JdbcTransferDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Override
     public double getBalance(String username) {
         double balance = 0;
